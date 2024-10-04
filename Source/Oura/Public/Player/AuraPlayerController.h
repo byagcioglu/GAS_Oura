@@ -8,12 +8,19 @@
 
 class UInputMappingContext;
 class UInputAction;
+class UAuraInputConfig;
+class USplineComponent;
 struct FInputActionValue;
 
 UCLASS()
 class OURA_API AAuraPlayerController : public APlayerController
 {
 	GENERATED_BODY()
+
+public:
+	AAuraPlayerController();
+	virtual void PlayerTick(float DeltaTime) override;
+
 	
 protected:
 	virtual void BeginPlay() override;
@@ -27,4 +34,21 @@ private:
 	TObjectPtr<UInputAction> MoveAction;
 
 	void Move(const FInputActionValue& InputActionValue);
+
+	void AbilityInputTagPressed();
+	void AbilityInputTagReleased();
+	void AbilityInputTagHeld();
+
+	UPROPERTY(EditDefaultsOnly, Category="Input")
+	TObjectPtr<UAuraInputConfig> InputConfig;
+
+	void CursorTrace();
+	void AutoRun();
+	FHitResult CursorHit;
+
+	FVector CachedDestination = FVector::ZeroVector;
+	bool bAutoRunning = false;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<USplineComponent> Spline;
 };
