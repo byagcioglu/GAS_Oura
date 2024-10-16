@@ -16,6 +16,10 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
+	TObjectPtr<USkeletalMeshComponent> Weapon;
+
 
 public:	
 	virtual void Tick(float DeltaTime) override;
