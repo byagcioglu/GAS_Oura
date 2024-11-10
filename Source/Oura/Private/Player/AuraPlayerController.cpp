@@ -8,6 +8,8 @@
 #include "Components/SplineComponent.h"
 #include "NavigationPath.h"
 #include "NavigationSystem.h"
+#include "GameFramework/Character.h"
+#include "Interaction/HighlightInterface.h"
 
 
 AAuraPlayerController::AAuraPlayerController()
@@ -23,11 +25,40 @@ void AAuraPlayerController::PlayerTick(float DeltaTime)
 	AutoRun();
 }
 
+void AAuraPlayerController::HighlightActor(AActor* InActor)
+{
+	if (IsValid(InActor) && InActor->Implements<UHighlightInterface>())
+	{
+		IHighlightInterface::Execute_HighlightActor(InActor);
+	}
+}
+
+void AAuraPlayerController::UnHighlightActor(AActor* InActor)
+{
+	if (IsValid(InActor) && InActor->Implements<UHighlightInterface>())
+	{
+		IHighlightInterface::Execute_UnHighlightActor(InActor);
+	}
+}
+
 void AAuraPlayerController::CursorTrace()
 {
 	const ECollisionChannel TraceChannel = ECC_Visibility;
 	GetHitResultUnderCursor(TraceChannel, false, CursorHit);
+	if (!CursorHit.bBlockingHit) return;
 
+	LastActor=ThisActor;
+
+	if (IsValid(CursorHit.GetActor()) && CursorHit.GetActor()->Implements<UHighlightInterface>())
+		ThisActor=CursorHit.GetActor();
+	else
+		ThisActor=nullptr;
+
+	if (LastActor!=ThisActor)
+	{
+		HighlightActor(ThisActor);
+		UnHighlightActor(LastActor);
+	} 
 	
 }
 
