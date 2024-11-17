@@ -11,6 +11,7 @@ class UInputAction;
 class UAuraInputConfig;
 class USplineComponent;
 struct FInputActionValue;
+class UAuraAbilitySystemComponent;
 
 UCLASS()
 class OURA_API AAuraPlayerController : public APlayerController
@@ -55,4 +56,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USplineComponent> Spline;
+
+	UPROPERTY()
+	TObjectPtr<UAuraAbilitySystemComponent> AuraAbilitySystemComponent;
+
+	UAuraAbilitySystemComponent* GetASC();
 };

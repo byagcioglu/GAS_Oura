@@ -16,6 +16,7 @@ class OURA_API AAuraCharacter : public AAuraCharacterBase
 
 public:
 	AAuraCharacter();
+	virtual void PossessedBy(AController* NewController) override;
 
 private:
 	UPROPERTY(VisibleAnywhere)

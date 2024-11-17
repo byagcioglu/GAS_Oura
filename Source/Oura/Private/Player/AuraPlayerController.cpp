@@ -10,6 +10,9 @@
 #include "NavigationSystem.h"
 #include "GameFramework/Character.h"
 #include "Interaction/HighlightInterface.h"
+#include "AbilitySystemBlueprintLibrary.h"
+#include "AbilitySystem/AuraAbilitySystemComponent.h"
+
 
 
 AAuraPlayerController::AAuraPlayerController()
@@ -152,6 +155,8 @@ void AAuraPlayerController::AbilityInputTagReleased()
 
 void AAuraPlayerController::AbilityInputTagHeld()
 {
+	GetASC()->AbilityInputTagHeld();
+
 	if (CursorHit.bBlockingHit) CachedDestination = CursorHit.ImpactPoint;
 
 	if (APawn* ControlledPawn = GetPawn())
@@ -159,4 +164,13 @@ void AAuraPlayerController::AbilityInputTagHeld()
 		const FVector WorldDirection = (CachedDestination - ControlledPawn->GetActorLocation()).GetSafeNormal();
 		ControlledPawn->AddMovementInput(WorldDirection);
 	}
+}
+
+UAuraAbilitySystemComponent* AAuraPlayerController::GetASC()
+{
+	if (AuraAbilitySystemComponent == nullptr)
+	{
+		AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetPawn<APawn>()));
+	}
+	return AuraAbilitySystemComponent;
 }
