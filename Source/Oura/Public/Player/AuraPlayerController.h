@@ -13,6 +13,13 @@ class USplineComponent;
 struct FInputActionValue;
 class UAuraAbilitySystemComponent;
 
+enum class ETargetingStatus : uint8
+{
+	TargetingEnemy,
+	TargetingNonEnemy,
+	NotTargeting
+};
+
 UCLASS()
 class OURA_API AAuraPlayerController : public APlayerController
 {
@@ -53,6 +60,7 @@ private:
 
 	FVector CachedDestination = FVector::ZeroVector;
 	bool bAutoRunning = false;
+	ETargetingStatus TargetingStatus = ETargetingStatus::NotTargeting;
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USplineComponent> Spline;

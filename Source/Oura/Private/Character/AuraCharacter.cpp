@@ -25,6 +25,7 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 	Super::PossessedBy(NewController);
 
 	AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
+	AuraPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(AuraPlayerState, this);
 	AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
 
 	AddCharacterAbilities();
