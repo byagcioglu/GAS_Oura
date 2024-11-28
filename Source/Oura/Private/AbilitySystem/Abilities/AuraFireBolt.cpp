@@ -4,12 +4,13 @@
 #include "AbilitySystem/Abilities/AuraFireBolt.h"
 #include "Actor/AuraProjectile.h"
 
+
 void UAuraFireBolt::SpawnProjectiles(const FVector& ProjectileTargetLocation)
 {
 	const bool bIsServer = GetAvatarActorFromActorInfo()->HasAuthority();
 	if (!bIsServer) return;
 
-	const FVector SocketLocation = GetAvatarActorFromActorInfo()->GetActorLocation();
+	const FVector SocketLocation = ICombatInterface::Execute_GetCombatSocketLocation(GetAvatarActorFromActorInfo());
 
 	FRotator Rotation = (ProjectileTargetLocation - SocketLocation).Rotation();
 	
