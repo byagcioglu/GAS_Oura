@@ -52,3 +52,8 @@ FVector AAuraCharacterBase::GetCombatSocketLocation_Implementation()
 	
 }
 
+void AAuraCharacterBase::InitAbilityActorInfo()
+{
+	
+}
+

@@ -25,5 +25,8 @@ void UAuraFireBolt::SpawnProjectiles(const FVector& ProjectileTargetLocation)
     Cast<APawn>(GetOwningActorFromActorInfo()),
     ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
 
+    Projectile->DamageEffectParams.SourceAbilitySystemComponent = GetAbilitySystemComponentFromActorInfo();
+    Projectile->DamageEffectParams.DamageGameplayEffectClass = DamageEffectClass;
+
     Projectile->FinishSpawning(SpawnTransform);
 }

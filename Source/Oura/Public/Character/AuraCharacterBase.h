@@ -10,6 +10,7 @@
 #include "AuraCharacterBase.generated.h"
 
 class UAbilitySystemComponent;
+class UAttributeSet;
 
 UCLASS()
 class OURA_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface
@@ -33,7 +34,12 @@ protected:
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
+	UPROPERTY()
+	TObjectPtr<UAttributeSet> AttributeSet;
+
 	void AddCharacterAbilities();
+
+	virtual void InitAbilityActorInfo();
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Abilities")
