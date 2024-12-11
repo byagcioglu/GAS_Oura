@@ -27,6 +27,12 @@ void AAuraEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 
+	for (TSubclassOf<UGameplayAbility> AbilityClass : CommonAbilities)
+	{
+		FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(AbilityClass, 1);
+		AbilitySystemComponent->GiveAbility(AbilitySpec);
+	}
+
 	FGameplayEffectContextHandle VitalAttributesContextHandle = AbilitySystemComponent->MakeEffectContext();
 	VitalAttributesContextHandle.AddSourceObject(AbilitySystemComponent->GetAvatarActor());
 	const FGameplayEffectSpecHandle VitalAttributesSpecHandle = AbilitySystemComponent
