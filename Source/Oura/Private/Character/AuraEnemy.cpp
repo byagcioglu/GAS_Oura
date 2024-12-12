@@ -4,6 +4,7 @@
 #include "Character/AuraEnemy.h"
 #include "AI/AuraAIController.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
+#include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardComponent.h"
@@ -27,17 +28,12 @@ void AAuraEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 
-	for (TSubclassOf<UGameplayAbility> AbilityClass : CommonAbilities)
-	{
-		FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(AbilityClass, 1);
-		AbilitySystemComponent->GiveAbility(AbilitySpec);
-	}
+	InitAbilityActorInfo();
 
-	FGameplayEffectContextHandle VitalAttributesContextHandle = AbilitySystemComponent->MakeEffectContext();
-	VitalAttributesContextHandle.AddSourceObject(AbilitySystemComponent->GetAvatarActor());
-	const FGameplayEffectSpecHandle VitalAttributesSpecHandle = AbilitySystemComponent
-			->MakeOutgoingSpec(DefaultVitalAttributes, 1.f, VitalAttributesContextHandle);
-	AbilitySystemComponent->ApplyGameplayEffectSpecToSelf(*VitalAttributesSpecHandle.Data.Get());
+	if (HasAuthority())
+	{
+		UAuraAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent);	
+	}
 
 	if (UAuraUserWidget* AuraUserWidget = Cast<UAuraUserWidget>(HealthBar->GetUserWidgetObject()))
 	{
@@ -78,3 +74,19 @@ void AAuraEnemy::UnHighlightActor_Implementation()
 	GetMesh()->SetRenderCustomDepth(false);
 	Weapon->SetRenderCustomDepth(false);
 }
+
+void AAuraEnemy::InitAbilityActorInfo()
+{
+	AbilitySystemComponent->InitAbilityActorInfo(this, this);
+
+	if (HasAuthority())
+	{
+		InitializeDefaultAttributes();		
+	}
+}
+
+void AAuraEnemy::InitializeDefaultAttributes() const
+{
+	UAuraAbilitySystemLibrary::InitializeDefaultAttributes(this, 1.f, AbilitySystemComponent);
+}
+
