@@ -33,6 +33,8 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Common Class Defaults")
 	TArray<TSubclassOf<UGameplayAbility>> CommonAbilities;
 
+	virtual void Die() override;
+
 protected:
 	virtual void BeginPlay() override;
 
