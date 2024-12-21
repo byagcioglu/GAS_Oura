@@ -27,6 +27,9 @@ public:
 	UFUNCTION(NetMulticast, Reliable)
 	virtual void MulticastHandleDeath();
 
+	virtual bool IsDead_Implementation() const override;
+	virtual AActor* GetAvatar_Implementation() override;
+
 protected:
 	virtual void BeginPlay() override;
 	
@@ -67,6 +70,8 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TObjectPtr<UMaterialInstance> WeaponDissolveMaterialInstance;
 
+	UPROPERTY(BlueprintReadOnly)
+	bool bDead = false;
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Abilities")
