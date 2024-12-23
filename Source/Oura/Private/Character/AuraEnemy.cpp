@@ -10,6 +10,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Components/WidgetComponent.h"
 #include "UI/Widget/AuraUserWidget.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 AAuraEnemy::AAuraEnemy()
 {
@@ -47,6 +48,12 @@ void AAuraEnemy::BeginPlay()
 			{
 				OnHealthChanged.Broadcast(Data.NewValue);
 			}
+		);
+
+		AbilitySystemComponent->RegisterGameplayTagEvent(FGameplayTag::RequestGameplayTag("Effects.HitReact"),
+											EGameplayTagEventType::NewOrRemoved).AddUObject(
+			this,
+			&AAuraEnemy::HitReactTagChanged
 		);
 
 		OnHealthChanged.Broadcast(AuraAS->GetHealth());
@@ -94,5 +101,15 @@ void AAuraEnemy::Die()
 {
 	SetLifeSpan(3.f);
 	Super::Die();
+}
+
+void AAuraEnemy::HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
+{
+	bool bHitReacting = NewCount > 0;
+	GetCharacterMovement()->MaxWalkSpeed = bHitReacting ? 0.f : 250.f;
+	if (AuraAIController && AuraAIController->GetBlackboardComponent())
+	{
+		AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("HitReacting"), bHitReacting);
+	}
 }
 

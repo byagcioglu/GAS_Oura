@@ -8,6 +8,7 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "NiagaraFunctionLibrary.h"
+#include "Oura/Oura.h"
 
 AAuraProjectile::AAuraProjectile()
 {
@@ -15,7 +16,7 @@ AAuraProjectile::AAuraProjectile()
 
 	Sphere = CreateDefaultSubobject<USphereComponent>("Sphere");
 	SetRootComponent(Sphere);
-	Sphere->SetCollisionObjectType(ECollisionChannel::ECC_GameTraceChannel1);
+	Sphere->SetCollisionObjectType(ECC_Projectile);
 	Sphere->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	Sphere->SetCollisionResponseToAllChannels(ECR_Ignore);
 	Sphere->SetCollisionResponseToChannel(ECC_WorldDynamic, ECR_Overlap);

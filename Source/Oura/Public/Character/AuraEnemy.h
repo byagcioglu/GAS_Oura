@@ -35,6 +35,8 @@ public:
 
 	virtual void Die() override;
 
+	void HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
+
 protected:
 	virtual void BeginPlay() override;
 
