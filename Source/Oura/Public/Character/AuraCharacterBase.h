@@ -30,6 +30,8 @@ public:
 	virtual bool IsDead_Implementation() const override;
 	virtual AActor* GetAvatar_Implementation() override;
 
+	virtual UNiagaraSystem* GetBloodEffect_Implementation() override;
+
 protected:
 	virtual void BeginPlay() override;
 	
@@ -72,6 +74,9 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly)
 	bool bDead = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
+	UNiagaraSystem* BloodEffect;
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Abilities")

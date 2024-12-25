@@ -119,3 +119,8 @@ AActor* AAuraCharacterBase::GetAvatar_Implementation()
 	return this;
 }
 
+UNiagaraSystem* AAuraCharacterBase::GetBloodEffect_Implementation()
+{
+	return BloodEffect;
+}
+

@@ -10,6 +10,7 @@
 #include "Interaction/CombatInterface.h"
 #include "AuraAbilityTypes.h"
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
+#include "AuraGameplayTags.h"
 
 
 
@@ -57,11 +58,9 @@ void UAuraAttributeSet::HandleIncomingDamage(const FEffectProperties& Props)
 		else
 		{
 			FGameplayTagContainer TagContainer;
-			TagContainer.AddTag(FGameplayTag::RequestGameplayTag(FName("Effects.HitReact")));
+			TagContainer.AddTag(FAuraGameplayTags::Get().Effects_HitReact);
 			Props.TargetASC->TryActivateAbilitiesByTag(TagContainer);
 			
-			Props.TargetCharacter->LaunchCharacter(*new FVector((-250.f,-400.f,189.65f)), true, true);
-
 			const FVector& KnockbackForce = UAuraAbilitySystemLibrary::GetKnockbackForce(Props.EffectContextHandle);
 			if (!KnockbackForce.IsNearlyZero(1.f))
 			{

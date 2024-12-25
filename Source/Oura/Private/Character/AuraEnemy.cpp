@@ -11,6 +11,8 @@
 #include "Components/WidgetComponent.h"
 #include "UI/Widget/AuraUserWidget.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "AuraGameplayTags.h"
+
 
 AAuraEnemy::AAuraEnemy()
 {
@@ -50,7 +52,7 @@ void AAuraEnemy::BeginPlay()
 			}
 		);
 
-		AbilitySystemComponent->RegisterGameplayTagEvent(FGameplayTag::RequestGameplayTag("Effects.HitReact"),
+		AbilitySystemComponent->RegisterGameplayTagEvent(FAuraGameplayTags::Get().Effects_HitReact,
 											EGameplayTagEventType::NewOrRemoved).AddUObject(
 			this,
 			&AAuraEnemy::HitReactTagChanged
