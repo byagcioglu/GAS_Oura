@@ -7,6 +7,7 @@
 #include "AuraGameModeBase.generated.h"
 
 class UCharacterClassInfo;
+class ULootTiers;
 
 UCLASS()
 class OURA_API AAuraGameModeBase : public AGameModeBase
@@ -16,4 +17,7 @@ class OURA_API AAuraGameModeBase : public AGameModeBase
 public:
 	UPROPERTY(EditDefaultsOnly, Category = "Character Class Defaults")
 	TObjectPtr<UCharacterClassInfo> CharacterClassInfo;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Loot Tiers")
+	TObjectPtr<ULootTiers> LootTiers;
 };

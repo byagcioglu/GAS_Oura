@@ -58,5 +58,8 @@ protected:
 
 	virtual void InitAbilityActorInfo() override;
 	virtual void InitializeDefaultAttributes() const override;
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void SpawnLoot();
 	
 };

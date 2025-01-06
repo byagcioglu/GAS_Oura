@@ -102,6 +102,7 @@ void AAuraEnemy::InitializeDefaultAttributes() const
 void AAuraEnemy::Die()
 {
 	SetLifeSpan(3.f);
+	SpawnLoot();
 	Super::Die();
 }
 
