@@ -4,6 +4,11 @@
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "Abilities/GameplayAbility.h"
 
+void UAuraAbilitySystemComponent::AbilityActorInfoSet()
+{
+	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UAuraAbilitySystemComponent::ClientEffectApplied);
+}
+
 void UAuraAbilitySystemComponent::AbilityInputTagHeld()
 {
 	for (FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
@@ -25,4 +30,12 @@ void UAuraAbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclassOf
 			GiveAbility(AbilitySpec);
 		}
 	}
+}
+
+void UAuraAbilitySystemComponent::ClientEffectApplied_Implementation(UAbilitySystemComponent* AbilitySystemComponent,
+                                                    const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle)
+{
+	FGameplayTagContainer TagContainer;
+	EffectSpec.GetAllAssetTags(TagContainer);
+	EffectAssetTags.Broadcast(TagContainer);
 }
