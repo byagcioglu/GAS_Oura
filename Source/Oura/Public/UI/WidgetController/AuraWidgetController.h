@@ -7,12 +7,15 @@
 #include "UObject/NoExportTypes.h"
 #include "AuraWidgetController.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAbilityInfoSignature, const FAuraAbilityInfo&, Info);
+
 class UAttributeSet;
 class UAbilitySystemComponent;
 class AAuraPlayerController;
 class AAuraPlayerState;
 class UAuraAbilitySystemComponent;
 class UAuraAttributeSet;
+class UAbilityInfo;
 
 
 USTRUCT(BlueprintType)
@@ -48,7 +51,18 @@ public:
 
 	virtual void BindCallbacksToDependencies();
 
+	UFUNCTION(BlueprintCallable)
+	virtual void BroadcastInitialValues();
+
+	void BroadcastAbilityInfo();
+
+	UPROPERTY(BlueprintAssignable, Category="GAS|Messages")
+	FAbilityInfoSignature AbilityInfoDelegate;
+
 protected:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Widget Data")
+	TObjectPtr<UAbilityInfo> AbilityInfo;
+
 	UPROPERTY(BlueprintReadOnly, Category="WidgetController")
 	TObjectPtr<APlayerController> PlayerController;
 

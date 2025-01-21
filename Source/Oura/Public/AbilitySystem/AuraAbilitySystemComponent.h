@@ -7,6 +7,7 @@
 #include "AuraAbilitySystemComponent.generated.h"
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTags, const FGameplayTagContainer& /*AssetTags*/);
+DECLARE_DELEGATE_OneParam(FForEachAbility, const FGameplayAbilitySpec&);
 
 UCLASS()
 class OURA_API UAuraAbilitySystemComponent : public UAbilitySystemComponent
@@ -18,6 +19,8 @@ public:
 	void AbilityActorInfoSet();
 	void AbilityInputTagHeld();
 	void AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupAbilities);
+	void ForEachAbility(const FForEachAbility& Delegate);
+	static FGameplayTag GetAbilityTagFromSpec(const FGameplayAbilitySpec& AbilitySpec);
 
 protected:
 	UFUNCTION(Client, Reliable)

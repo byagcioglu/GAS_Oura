@@ -17,6 +17,8 @@ public:
 
 	FGameplayTag Effects_HitReact;
 
+    FGameplayTag Abilities_Fire_FireBolt;
+
 private:
     static FAuraGameplayTags GameplayTags;
 
