@@ -4,6 +4,8 @@
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "Abilities/GameplayAbility.h"
 #include "AbilitySystem/Data/AbilityInfo.h"
+#include "AbilitySystem/Abilities/AuraGameplayAbility.h"
+#include "AuraGameplayTags.h"
 
 void UAuraAbilitySystemComponent::AbilityActorInfoSet()
 {
@@ -26,11 +28,24 @@ void UAuraAbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclassOf
 	for (const TSubclassOf<UGameplayAbility> AbilityClass : StartupAbilities)
 	{
 		FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(AbilityClass, 1);
-		if (const UGameplayAbility* AuraAbility = AbilitySpec.Ability)
+		if (const UAuraGameplayAbility* AuraAbility = Cast<UAuraGameplayAbility>(AbilitySpec.Ability))
 		{
+			AbilitySpec.DynamicAbilityTags.AddTag(AuraAbility->StartupInputTag);
 			GiveAbility(AbilitySpec);
 		}
 	}
+}
+
+FGameplayTag UAuraAbilitySystemComponent::GetInputTagFromSpec(const FGameplayAbilitySpec& AbilitySpec)
+{
+	for (FGameplayTag Tag : AbilitySpec.DynamicAbilityTags)
+	{
+		if (Tag.MatchesTag(FGameplayTag::RequestGameplayTag(FName("InputTag"))))
+		{
+			return Tag;
+		}
+	}
+	return FGameplayTag();
 }
 
 void UAuraAbilitySystemComponent::ClientEffectApplied_Implementation(UAbilitySystemComponent* AbilitySystemComponent,
