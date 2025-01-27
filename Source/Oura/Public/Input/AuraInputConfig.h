@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
+#include "GameplayTagContainer.h"
 #include "AuraInputConfig.generated.h"
 
 USTRUCT(BlueprintType)
@@ -13,6 +14,9 @@ struct FAuraInputAction
 
 	UPROPERTY(EditDefaultsOnly)
 	const class UInputAction* InputAction = nullptr;
+
+	UPROPERTY(EditDefaultsOnly)
+	FGameplayTag InputTag = FGameplayTag();
 };
 
 UCLASS()

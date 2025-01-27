@@ -131,7 +131,7 @@ void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 	}
 }
 
-void AAuraPlayerController::AbilityInputTagPressed()
+void AAuraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 {
 	if (IsValid(ThisActor))
 	{
@@ -145,7 +145,7 @@ void AAuraPlayerController::AbilityInputTagPressed()
 	bAutoRunning=false;
 }
 
-void AAuraPlayerController::AbilityInputTagReleased()
+void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
 	if (TargetingStatus != ETargetingStatus::TargetingEnemy)
 	{
@@ -167,11 +167,11 @@ void AAuraPlayerController::AbilityInputTagReleased()
 	}
 }
 
-void AAuraPlayerController::AbilityInputTagHeld()
+void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 {
 	if (TargetingStatus == ETargetingStatus::TargetingEnemy)
 	{
-		GetASC()->AbilityInputTagHeld();
+		GetASC()->AbilityInputTagHeld(InputTag);
 	}
 
 	if (CursorHit.bBlockingHit) CachedDestination = CursorHit.ImpactPoint;

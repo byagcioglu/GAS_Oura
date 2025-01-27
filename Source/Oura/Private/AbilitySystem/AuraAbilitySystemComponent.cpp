@@ -12,14 +12,20 @@ void UAuraAbilitySystemComponent::AbilityActorInfoSet()
 	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UAuraAbilitySystemComponent::ClientEffectApplied);
 }
 
-void UAuraAbilitySystemComponent::AbilityInputTagHeld()
+void UAuraAbilitySystemComponent::AbilityInputTagHeld(const FGameplayTag& InputTag)
 {
+	if (!InputTag.IsValid()) return;
+	FScopedAbilityListLock ActiveScopeLoc(*this);
+
 	for (FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
 	{
-        if (!AbilitySpec.IsActive())
-        {
-            TryActivateAbility(AbilitySpec.Handle);
-        }
+		if (AbilitySpec.DynamicAbilityTags.HasTagExact(InputTag))
+		{
+			if (!AbilitySpec.IsActive())
+			{
+				TryActivateAbility(AbilitySpec.Handle);
+			}
+		}
 	}
 }
 

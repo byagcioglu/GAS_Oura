@@ -17,7 +17,7 @@ class OURA_API UAuraAbilitySystemComponent : public UAbilitySystemComponent
 public:
 	FEffectAssetTags EffectAssetTags;
 	void AbilityActorInfoSet();
-	void AbilityInputTagHeld();
+	void AbilityInputTagHeld(const FGameplayTag& InputTag);
 	void AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupAbilities);
 	void ForEachAbility(const FForEachAbility& Delegate);
 	static FGameplayTag GetAbilityTagFromSpec(const FGameplayAbilitySpec& AbilitySpec);

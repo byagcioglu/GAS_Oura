@@ -18,6 +18,7 @@ public:
 	FGameplayTag Effects_HitReact;
 
     FGameplayTag Abilities_Fire_FireBolt;
+	FGameplayTag Abilities_Lightning_Electrocute;
 
     FGameplayTag InputTag_LMB;
 	FGameplayTag InputTag_RMB;
