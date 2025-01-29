@@ -11,6 +11,8 @@ public:
     static const FAuraGameplayTags& Get() { return GameplayTags;}
     static void InitializeNativeGameplayTags();
 
+	FGameplayTag Abilities_None;
+
 	FGameplayTag Abilities_Attack;
 
 	FGameplayTag Montage_Attack_1;

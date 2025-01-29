@@ -8,6 +8,15 @@ FAuraGameplayTags FAuraGameplayTags::GameplayTags;
 
 void FAuraGameplayTags::InitializeNativeGameplayTags()
 {
+	/*
+	 * Abilities
+	 */
+
+	GameplayTags.Abilities_None = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Abilities.None"),
+		FString("No Ability - like the nullptr for Ability Tags")
+		);
+
     GameplayTags.Abilities_Attack = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Abilities.Attack"),
 		FString("Attack Ability Tag")
@@ -17,6 +26,9 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FName("Montage.Attack.1"),
 		FString("Attack 1")
 		);
+
+
+		
 
     GameplayTags.Effects_HitReact = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Effects.HitReact"),
