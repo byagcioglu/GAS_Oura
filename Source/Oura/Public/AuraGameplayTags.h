@@ -11,7 +11,7 @@ public:
     static const FAuraGameplayTags& Get() { return GameplayTags;}
     static void InitializeNativeGameplayTags();
 
-	FGameplayTag Abilities_None;
+	FGameplayTag Attributes_Meta_IncomingXP;	
 
 	FGameplayTag Abilities_Attack;
 
@@ -19,6 +19,7 @@ public:
 
 	FGameplayTag Effects_HitReact;
 
+	FGameplayTag Abilities_None;
     FGameplayTag Abilities_Fire_FireBolt;
 	FGameplayTag Abilities_Lightning_Electrocute;
 
