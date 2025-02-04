@@ -37,7 +37,8 @@ void UAuraAbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclassOf
 		FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(AbilityClass, 1);
 		if (const UAuraGameplayAbility* AuraAbility = Cast<UAuraGameplayAbility>(AbilitySpec.Ability))
 		{
-			AbilitySpec.DynamicAbilityTags.AddTag(AuraAbility->StartupInputTag);
+			//AbilitySpec.DynamicAbilityTags.AddTag(AuraAbility->StartupInputTag);
+			AbilitySpec.DynamicAbilityTags.AddTag(FAuraGameplayTags::Get().Abilities_Status_Eligible);
 			GiveAbility(AbilitySpec);
 		}
 	}
@@ -59,6 +60,18 @@ FGameplayTag UAuraAbilitySystemComponent::GetInputTagFromSpec(const FGameplayAbi
 		if (Tag.MatchesTag(FGameplayTag::RequestGameplayTag(FName("InputTag"))))
 		{
 			return Tag;
+		}
+	}
+	return FGameplayTag();
+}
+
+FGameplayTag UAuraAbilitySystemComponent::GetStatusFromSpec(const FGameplayAbilitySpec& AbilitySpec)
+{
+	for (FGameplayTag StatusTag : AbilitySpec.DynamicAbilityTags)
+	{
+		if (StatusTag.MatchesTag(FGameplayTag::RequestGameplayTag(FName("Abilities.Status"))))
+		{
+			return StatusTag;
 		}
 	}
 	return FGameplayTag();
@@ -147,6 +160,7 @@ void UAuraAbilitySystemComponent::ServerEquipAbility_Implementation(const FGamep
 {
 	if (FGameplayAbilitySpec* AbilitySpec = GetSpecFromAbilityTag(AbilityTag))
 	{
+		const FAuraGameplayTags& GameplayTags = FAuraGameplayTags::Get();
 		const FGameplayTag& PrevSlot = GetInputTagFromSpec(*AbilitySpec);
 
 		if (!SlotIsEmpty(Slot))
@@ -156,7 +170,7 @@ void UAuraAbilitySystemComponent::ServerEquipAbility_Implementation(const FGamep
 			{
 				if (AbilityTag.MatchesTagExact(GetAbilityTagFromSpec(*SpecWithSlot)))
 				{
-					AbilityEquipped.Broadcast(AbilityTag, Slot, PrevSlot);
+					AbilityEquipped.Broadcast(AbilityTag, GameplayTags.Abilities_Status_Equipped, Slot, PrevSlot);
 					return;
 				}
 
@@ -170,7 +184,7 @@ void UAuraAbilitySystemComponent::ServerEquipAbility_Implementation(const FGamep
 
 		AbilitySpec->DynamicAbilityTags.AddTag(Slot);
 
-		AbilityEquipped.Broadcast(AbilityTag, Slot, PrevSlot);
+		AbilityEquipped.Broadcast(AbilityTag, GameplayTags.Abilities_Status_Equipped, Slot, PrevSlot);
 
 	}
 }
@@ -187,7 +201,7 @@ void UAuraAbilitySystemComponent::UpdateAbilityStatuses(int32 Level)
 			FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(Info.Ability, 1);
 			GiveAbility(AbilitySpec);
 			MarkAbilitySpecDirty(AbilitySpec);
-			AbilityStatusChanged.Broadcast(Info.AbilityTag, 1);
+			AbilityStatusChanged.Broadcast(Info.AbilityTag, FAuraGameplayTags::Get().Abilities_Status_Eligible, 1);
 		}
 	}
 }
