@@ -37,6 +37,9 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerEquipAbility(const FGameplayTag& AbilityTag, const FGameplayTag& Slot);
 
+	UFUNCTION(Server, Reliable)
+	void ServerSpendSpellPoint(const FGameplayTag& AbilityTag);
+
 protected:
 	UFUNCTION(Client, Reliable)
 	void ClientEffectApplied(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec,
