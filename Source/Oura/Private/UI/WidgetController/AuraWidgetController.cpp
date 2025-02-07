@@ -47,3 +47,12 @@ void UAuraWidgetController::BroadcastAbilityInfo()
 	});
 	GetAuraASC()->ForEachAbility(BroadcastDelegate);
 }
+
+AAuraPlayerState* UAuraWidgetController::GetAuraPS()
+{
+	if (AuraPlayerState == nullptr)
+	{
+		AuraPlayerState = Cast<AAuraPlayerState>(PlayerState);
+	}
+	return AuraPlayerState;
+}

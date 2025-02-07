@@ -9,6 +9,8 @@
 #include "SpellMenuWidgetController.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FSpellGlobeSelectedSignature, bool, bSpendPointsButtonEnabled, bool, bEquipButtonEnabled);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSpellGlobeReassignedSignature, const FGameplayTag&, AbilityTag);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FWaitForEquipSelectionSignature);
 
 struct FSelectedAbility
 {
@@ -24,6 +26,21 @@ class OURA_API USpellMenuWidgetController : public UAuraWidgetController
 public:
 	virtual void BroadcastInitialValues() override;
 	virtual void BindCallbacksToDependencies() override;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnPlayerStatChangedSignature SpellPointsChanged;
+
+	UPROPERTY(BlueprintAssignable)
+	FWaitForEquipSelectionSignature WaitForEquipDelegate;
+
+	UPROPERTY(BlueprintAssignable)
+	FWaitForEquipSelectionSignature StopWaitingForEquipDelegate;
+	
+	UPROPERTY(BlueprintAssignable)
+	FSpellGlobeReassignedSignature SpellGlobeReassignedDelegate;
+
+	UFUNCTION(BlueprintCallable)
+	void GlobeDeselect();
 
 	UPROPERTY(BlueprintAssignable)
 	FSpellGlobeSelectedSignature SpellGlobeSelectedDelegate;
@@ -46,4 +63,6 @@ private:
 	FSelectedAbility SelectedAbility = { FAuraGameplayTags::Get().Abilities_None,  FAuraGameplayTags::Get().Abilities_Status_Locked };
 	bool bWaitingForEquipSelection = false;
 	static void ShouldEnableButtons(const FGameplayTag& AbilityStatus, int32 SpellPoints, bool& bShouldEnableSpellPointsButton, bool& bShouldEnableEquipButton);
+	int32 CurrentSpellPoints = 0;
+
 };

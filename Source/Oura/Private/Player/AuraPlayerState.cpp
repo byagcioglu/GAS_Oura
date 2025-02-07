@@ -22,6 +22,8 @@ void AAuraPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	
 	DOREPLIFETIME(AAuraPlayerState, Level);
+	DOREPLIFETIME(AAuraPlayerState, SpellPoints);
+
 }
 
 UAbilitySystemComponent* AAuraPlayerState::GetAbilitySystemComponent() const
@@ -38,4 +40,21 @@ void AAuraPlayerState::AddToLevel(int32 InLevel)
 void AAuraPlayerState::OnRep_Level(int32 OldLevel)
 {
 	//OnLevelChangedDelegate.Broadcast(Level, true);
+}
+
+void AAuraPlayerState::SetSpellPoints(int32 InPoints)
+{
+	SpellPoints = InPoints;
+	OnSpellPointsChangedDelegate.Broadcast(SpellPoints);
+}
+
+void AAuraPlayerState::AddToSpellPoints(int32 InPoints)
+{
+	SpellPoints += InPoints;
+	OnSpellPointsChangedDelegate.Broadcast(SpellPoints);
+}
+
+void AAuraPlayerState::OnRep_SpellPoints(int32 OldSpellPoints)
+{
+	OnSpellPointsChangedDelegate.Broadcast(SpellPoints);
 }

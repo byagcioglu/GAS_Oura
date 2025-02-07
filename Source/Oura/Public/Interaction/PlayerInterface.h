@@ -19,4 +19,7 @@ class OURA_API IPlayerInterface
 public:
 	UFUNCTION(BlueprintNativeEvent)
 	void AddToPlayerLevel(int32 InPlayerLevel);
+
+	UFUNCTION(BlueprintNativeEvent)
+	void AddToSpellPoints(int32 InSpellPoints);
 };

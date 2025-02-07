@@ -20,6 +20,7 @@ public:
 	virtual void PossessedBy(AController* NewController) override;
 	virtual void OnRep_PlayerState() override;
 	virtual void AddToPlayerLevel_Implementation(int32 InPlayerLevel) override;
+	virtual void AddToSpellPoints_Implementation(int32 InSpellPoints) override;
 
 private:
 	UPROPERTY(VisibleAnywhere)

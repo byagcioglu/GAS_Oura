@@ -69,3 +69,9 @@ void AAuraCharacter::AddToPlayerLevel_Implementation(int32 InPlayerLevel)
 	}
 }
 
+void AAuraCharacter::AddToSpellPoints_Implementation(int32 InSpellPoints)
+{
+	AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
+	AuraPlayerState->AddToSpellPoints(InSpellPoints);
+}
+

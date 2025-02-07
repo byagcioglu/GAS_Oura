@@ -82,6 +82,7 @@ void UAuraAttributeSet::HandleIncomingXP(const FEffectProperties& Props)
 	const float LocalIncomingXP = GetIncomingXP();
 	SetIncomingXP(0.f);
 
+	IPlayerInterface::Execute_AddToSpellPoints(Props.SourceCharacter, 1);
 	IPlayerInterface::Execute_AddToPlayerLevel(Props.SourceCharacter, 1);
 
 }

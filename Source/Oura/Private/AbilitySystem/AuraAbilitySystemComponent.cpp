@@ -214,7 +214,7 @@ void UAuraAbilitySystemComponent::ServerSpendSpellPoint_Implementation(const FGa
 	{
 		if (GetAvatarActor()->Implements<UPlayerInterface>())
 		{
-			//IPlayerInterface::Execute_AddToSpellPoints(GetAvatarActor(), -1);
+			IPlayerInterface::Execute_AddToSpellPoints(GetAvatarActor(), -1);
 		}
 		
 		const FAuraGameplayTags GameplayTags = FAuraGameplayTags::Get();
