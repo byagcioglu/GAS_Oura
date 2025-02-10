@@ -53,6 +53,42 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FString("Unlocked Status")
 		);
 
+	/*
+	 * Passive Spells
+	 */
+	
+	GameplayTags.Abilities_Passive_LifeSiphon = UGameplayTagsManager::Get().AddNativeGameplayTag(
+			FName("Abilities.Passive.LifeSiphon"),
+			FString("Life Siphon")
+			);
+	GameplayTags.Abilities_Passive_ManaSiphon = UGameplayTagsManager::Get().AddNativeGameplayTag(
+			FName("Abilities.Passive.ManaSiphon"),
+			FString("Mana Siphon")
+			);
+	GameplayTags.Abilities_Passive_HaloOfProtection = UGameplayTagsManager::Get().AddNativeGameplayTag(
+			FName("Abilities.Passive.HaloOfProtection"),
+			FString("Halo Of Protection")
+			);
+
+	/*
+	 * Ability Types
+	 */
+
+	GameplayTags.Abilities_Type_None = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Abilities.Type.None"),
+		FString("Type None")
+		);
+
+	GameplayTags.Abilities_Type_Offensive = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Abilities.Type.Offensive"),
+		FString("Type Offensive")
+		);
+
+	GameplayTags.Abilities_Type_Passive = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Abilities.Type.Passive"),
+		FString("Type Passive")
+		);
+
 
 
     GameplayTags.Effects_HitReact = UGameplayTagsManager::Get().AddNativeGameplayTag(

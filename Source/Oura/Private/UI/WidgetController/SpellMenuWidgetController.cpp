@@ -54,7 +54,9 @@ void USpellMenuWidgetController::SpellGlobeSelected(const FGameplayTag& AbilityT
 {
 	if (bWaitingForEquipSelection)
 	{
-		StopWaitingForEquipDelegate.Broadcast();
+		const FGameplayTag SelectedAbilityType = AbilityInfo->FindAbilityInfoForTag(AbilityTag).AbilityType;
+		StopWaitingForEquipDelegate.Broadcast(SelectedAbilityType);
+
 		bWaitingForEquipSelection = false;
 	}
 
@@ -119,6 +121,8 @@ void USpellMenuWidgetController::ShouldEnableButtons(const FGameplayTag& Ability
 void USpellMenuWidgetController::SpellRowGlobePressed(const FGameplayTag& SlotTag, const FGameplayTag& AbilityType)
 {
 	if (!bWaitingForEquipSelection) return;
+	const FGameplayTag& SelectedAbilityType = AbilityInfo->FindAbilityInfoForTag(SelectedAbility.Ability).AbilityType;
+	if (!SelectedAbilityType.MatchesTagExact(AbilityType)) return;
 	GetAuraASC()->ServerEquipAbility(SelectedAbility.Ability, SlotTag);
 }
 
@@ -137,7 +141,7 @@ void USpellMenuWidgetController::OnAbilityEquipped(const FGameplayTag& AbilityTa
 	Info.StatusTag = Status;
 	AbilityInfoDelegate.Broadcast(Info);
 
-	StopWaitingForEquipDelegate.Broadcast();
+	StopWaitingForEquipDelegate.Broadcast(AbilityInfo->FindAbilityInfoForTag(AbilityTag).AbilityType);
 	SpellGlobeReassignedDelegate.Broadcast(AbilityTag);
 	GlobeDeselect();
 }
@@ -152,7 +156,9 @@ void USpellMenuWidgetController::SpendPointButtonPressed()
 
 void USpellMenuWidgetController::EquipButtonPressed()
 {
-	WaitForEquipDelegate.Broadcast();
+	const FGameplayTag AbilityType = AbilityInfo->FindAbilityInfoForTag(SelectedAbility.Ability).AbilityType;
+
+	WaitForEquipDelegate.Broadcast(AbilityType);
 	bWaitingForEquipSelection = true;
 }
 
@@ -160,7 +166,8 @@ void USpellMenuWidgetController::GlobeDeselect()
 {
 	if (bWaitingForEquipSelection)
 	{
-		StopWaitingForEquipDelegate.Broadcast();
+		const FGameplayTag SelectedAbilityType = AbilityInfo->FindAbilityInfoForTag(SelectedAbility.Ability).AbilityType;
+		StopWaitingForEquipDelegate.Broadcast(SelectedAbilityType);
 		bWaitingForEquipSelection = false;
 	}
 	

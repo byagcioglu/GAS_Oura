@@ -14,7 +14,8 @@
 				"AIModule",
 				"GameplayAbilities",
 				"UMG",
-				"CoreUObject"
+				"CoreUObject",
+				"Niagara"
 			]
 		}
 	],
