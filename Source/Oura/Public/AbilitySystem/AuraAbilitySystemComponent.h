@@ -20,7 +20,9 @@ class OURA_API UAuraAbilitySystemComponent : public UAbilitySystemComponent
 public:
 	FEffectAssetTags EffectAssetTags;
 	void AbilityActorInfoSet();
+	void AbilityInputTagPressed(const FGameplayTag& InputTag);
 	void AbilityInputTagHeld(const FGameplayTag& InputTag);
+	void AbilityInputTagReleased(const FGameplayTag& InputTag);
 	void AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupAbilities);
 	void AddCharacterPassiveAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupPassiveAbilities);
 	void ForEachAbility(const FForEachAbility& Delegate);

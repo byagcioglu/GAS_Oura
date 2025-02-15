@@ -30,7 +30,7 @@ public:
 
 	virtual bool IsDead_Implementation() const override;
 	virtual AActor* GetAvatar_Implementation() override;
-
+	virtual USkeletalMeshComponent* GetWeapon_Implementation() override;
 	virtual UNiagaraSystem* GetBloodEffect_Implementation() override;
 
 protected:
