@@ -56,3 +56,12 @@ AAuraPlayerState* UAuraWidgetController::GetAuraPS()
 	}
 	return AuraPlayerState;
 }
+
+UAuraAttributeSet* UAuraWidgetController::GetAuraAS()
+{
+	if (AuraAttributeSet == nullptr)
+	{
+		AuraAttributeSet = Cast<UAuraAttributeSet>(AttributeSet);
+	}
+	return AuraAttributeSet;
+}

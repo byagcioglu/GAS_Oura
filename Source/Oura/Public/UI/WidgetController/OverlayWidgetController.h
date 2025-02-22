@@ -24,6 +24,7 @@ struct FUIWidgetRow : public FTableRowBase
 	UTexture2D* Image = nullptr;
 };
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature, float, NewValue);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMessageWidgetRowSignature, FUIWidgetRow, Row);
 
 UCLASS(BlueprintType, Blueprintable)
@@ -32,10 +33,14 @@ class OURA_API UOverlayWidgetController : public UAuraWidgetController
 	GENERATED_BODY()
 	
 public:
+	virtual void BroadcastInitialValues() override;
 	virtual void BindCallbacksToDependencies() override;
 
 	UPROPERTY(BlueprintAssignable, Category="GAS|Messages")
 	FMessageWidgetRowSignature MessageWidgetRowDelegate;
+
+	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
+	FOnAttributeChangedSignature OnManaChanged;
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Widget Data")

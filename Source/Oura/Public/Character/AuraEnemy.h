@@ -6,9 +6,8 @@
 #include "Character/AuraCharacterBase.h"
 #include "Interaction/HighlightInterface.h"
 #include "Interaction/EnemyInterface.h"
+#include "UI/WidgetController/OverlayWidgetController.h"
 #include "AuraEnemy.generated.h"
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature, float, NewValue);
 
 class UBehaviorTree;
 class AAuraAIController;
