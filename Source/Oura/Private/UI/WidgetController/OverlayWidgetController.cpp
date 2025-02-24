@@ -10,11 +10,18 @@
 
 void UOverlayWidgetController::BroadcastInitialValues()
 {
+	OnHealthChanged.Broadcast(GetAuraAS()->GetHealth());
 	OnManaChanged.Broadcast(GetAuraAS()->GetMana());
 }
 
 void UOverlayWidgetController::BindCallbacksToDependencies()
 {
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(GetAuraAS()->GetHealthAttribute()).AddLambda(
+			[this](const FOnAttributeChangeData& Data)
+			{
+				OnHealthChanged.Broadcast(Data.NewValue);
+			}
+		);
 
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(GetAuraAS()->GetManaAttribute()).AddLambda(
 			[this](const FOnAttributeChangeData& Data)

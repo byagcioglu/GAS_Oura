@@ -40,6 +40,9 @@ public:
 	FMessageWidgetRowSignature MessageWidgetRowDelegate;
 
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
+	FOnAttributeChangedSignature OnHealthChanged;
+
+	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
 	FOnAttributeChangedSignature OnManaChanged;
 
 protected:
