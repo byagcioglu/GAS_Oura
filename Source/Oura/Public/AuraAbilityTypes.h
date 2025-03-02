@@ -44,12 +44,12 @@ public:
 	
 	virtual UScriptStruct* GetScriptStruct() const
 	{
-		return FGameplayEffectContext::StaticStruct();
+		return StaticStruct();
 	}
 
-	virtual FGameplayEffectContext* Duplicate() const
+	virtual FAuraGameplayEffectContext* Duplicate() const
 	{
-		FGameplayEffectContext* NewContext = new FGameplayEffectContext();
+		FAuraGameplayEffectContext* NewContext = new FAuraGameplayEffectContext();
 		*NewContext = *this;
 		if (GetHitResult())
 		{
@@ -65,6 +65,16 @@ protected:
 	UPROPERTY()
 	FVector KnockbackForce = FVector::ZeroVector;
 
+};
+
+template<>
+struct TStructOpsTypeTraits<FAuraGameplayEffectContext> : public TStructOpsTypeTraitsBase2<FAuraGameplayEffectContext>
+{
+	enum
+	{
+		WithNetSerializer = true,
+		WithCopy = true
+	};
 };
 
 
