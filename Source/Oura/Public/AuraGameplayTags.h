@@ -11,6 +11,8 @@ public:
     static const FAuraGameplayTags& Get() { return GameplayTags;}
     static void InitializeNativeGameplayTags();
 
+	FGameplayTag Attributes_Primary_Strength;
+
 	FGameplayTag Attributes_Meta_IncomingXP;	
 
 	FGameplayTag Abilities_Attack;

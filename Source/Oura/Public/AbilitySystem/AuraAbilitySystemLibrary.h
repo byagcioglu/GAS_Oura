@@ -11,6 +11,7 @@ struct FWidgetControllerParams;
 class UAbilitySystemComponent;
 class ULootTiers;
 class USpellMenuWidgetController;
+class UAttributeMenuWidgetController;
 
 UCLASS()
 class OURA_API UAuraAbilitySystemLibrary : public UBlueprintFunctionLibrary
@@ -60,4 +61,10 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|GameplayMechanics")
 	static void GetClosestTargets(int32 MaxTargets, const TArray<AActor*>& Actors, TArray<AActor*>& OutClosestTargets, const FVector& Origin);
+
+	UFUNCTION(BlueprintPure, Category="AuraAbilitySystemLibrary|WidgetController", meta = (DefaultToSelf = "WorldContextObject"))
+	static UAttributeMenuWidgetController* GetAttributeMenuWidgetController(const UObject* WorldContextObject);
+
+
+
 };
