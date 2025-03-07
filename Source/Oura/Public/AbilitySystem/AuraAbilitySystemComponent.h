@@ -55,6 +55,11 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientEquipAbility(const FGameplayTag& AbilityTag, const FGameplayTag& Status, const FGameplayTag& Slot, const FGameplayTag& PreviousSlot);
 
+	void UpgradeAttribute(const FGameplayTag& AttributeTag);
+
+	UFUNCTION(Server, Reliable)
+	void ServerUpgradeAttribute(const FGameplayTag& AttributeTag);
+	
 protected:
 	virtual void OnRep_ActivateAbilities() override;
 	

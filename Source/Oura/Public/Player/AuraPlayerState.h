@@ -22,12 +22,20 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
+
 	FORCEINLINE int32 GetPlayerLevel() const { return Level; }
 	void AddToLevel(int32 InLevel);
-	FOnPlayerStatChanged OnSpellPointsChangedDelegate;
+
 	FORCEINLINE int32 GetSpellPoints() const { return SpellPoints; }
 	void AddToSpellPoints(int32 InPoints);
 	void SetSpellPoints(int32 InPoints);
+	FOnPlayerStatChanged OnSpellPointsChangedDelegate;
+
+	FORCEINLINE int32 GetAttributePoints() const { return AttributePoints; }
+	void AddToAttributePoints(int32 InPoints);
+	void SetAttributePoints(int32 InPoints);
+	FOnPlayerStatChanged OnAttributePointsChangedDelegate;
+
 
 protected:
 	UPROPERTY(VisibleAnywhere)
@@ -48,5 +56,12 @@ private:
 
 	UFUNCTION()
 	void OnRep_SpellPoints(int32 OldSpellPoints);
+
+	UPROPERTY(VisibleAnywhere, ReplicatedUsing=OnRep_AttributePoints)
+	int32 AttributePoints = 5;
+
+	UFUNCTION()
+	void OnRep_AttributePoints(int32 OldAttributePoints);
+
 
 };
