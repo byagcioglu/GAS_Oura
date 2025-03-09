@@ -143,8 +143,23 @@ void UAuraAttributeSet::HandleIncomingXP(const FEffectProperties& Props)
 	const float LocalIncomingXP = GetIncomingXP();
 	SetIncomingXP(0.f);
 
-	IPlayerInterface::Execute_AddToSpellPoints(Props.SourceCharacter, 1);
-	IPlayerInterface::Execute_AddToPlayerLevel(Props.SourceCharacter, 1);
+	if (Props.SourceCharacter->Implements<UPlayerInterface>() && Props.SourceCharacter->Implements<UCombatInterface>())
+	{
+		const int32 CurrentLevel = ICombatInterface::Execute_GetPlayerLevel(Props.SourceCharacter);
+		const int32 CurrentXP = IPlayerInterface::Execute_GetXP(Props.SourceCharacter);
+
+		const int32 NewLevel = IPlayerInterface::Execute_FindLevelForXP(Props.SourceCharacter, CurrentXP + LocalIncomingXP);
+		const int32 NumLevelUps = NewLevel - CurrentLevel;
+		if (NumLevelUps > 0)
+		{
+
+			IPlayerInterface::Execute_AddToPlayerLevel(Props.SourceCharacter, 1);
+
+			IPlayerInterface::Execute_AddToAttributePoints(Props.SourceCharacter, 1);
+			IPlayerInterface::Execute_AddToSpellPoints(Props.SourceCharacter, 1);
+
+		}
+	}
 
 }
 

@@ -126,3 +126,8 @@ AActor* AAuraEnemy::GetCombatTarget_Implementation() const
 	return CombatTarget;
 }
 
+int32 AAuraEnemy::GetPlayerLevel_Implementation()
+{
+	return Level;
+}
+

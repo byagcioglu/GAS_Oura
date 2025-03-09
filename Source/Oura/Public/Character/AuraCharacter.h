@@ -24,6 +24,10 @@ public:
 	virtual int32 GetAttributePointsReward_Implementation(int32 Level) const override;
 	virtual void AddToAttributePoints_Implementation(int32 InAttributePoints) override;
 	virtual int32 GetAttributePoints_Implementation() const override;
+	virtual void AddToXP_Implementation(int32 InXP) override;
+	virtual int32 GetXP_Implementation() const override;
+	virtual int32 FindLevelForXP_Implementation(int32 InXP) const override;
+	virtual int32 GetPlayerLevel_Implementation() override;
 
 private:
 	UPROPERTY(VisibleAnywhere)

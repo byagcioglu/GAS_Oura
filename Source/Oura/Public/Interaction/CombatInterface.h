@@ -48,5 +48,8 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void SetIsBeingShocked(bool bInShock);
 
+	UFUNCTION(BlueprintNativeEvent)
+	int32 GetPlayerLevel();
+
 
 };

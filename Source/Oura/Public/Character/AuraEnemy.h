@@ -42,6 +42,8 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "Combat")
 	TObjectPtr<AActor> CombatTarget;
 
+	virtual int32 GetPlayerLevel_Implementation() override;
+
 
 protected:
 	virtual void BeginPlay() override;
@@ -60,5 +62,8 @@ protected:
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void SpawnLoot();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
+	int32 Level = 1;
 	
 };
