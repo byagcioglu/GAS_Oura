@@ -6,6 +6,14 @@
 #include "MVVMViewModelBase.h"
 #include "MVVM_LoadSlot.generated.h"
 
+UENUM(BlueprintType)
+enum ESaveSlotStatus
+{
+	Vacant,
+	EnterName,
+	Taken
+};
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSetWidgetSwitcherIndex, int32, WidgetSwitcherIndex);
 
 UCLASS()
@@ -28,6 +36,12 @@ public:
 	FString GetMapName() const { return MapName; }
 	int32 GetPlayerLevel() const { return PlayerLevel; }
 	FString GetLoadSlotName() const { return LoadSlotName; }
+
+	UPROPERTY()
+	int32 SlotIndex;
+
+	UPROPERTY()
+	TEnumAsByte<ESaveSlotStatus> SlotStatus;
 
 private:
 
