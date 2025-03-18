@@ -4,17 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "MVVMViewModelBase.h"
+#include "Game/LoadScreenSaveGame.h"
 #include "MVVM_LoadSlot.generated.h"
 
-UENUM(BlueprintType)
-enum ESaveSlotStatus
-{
-	Vacant,
-	EnterName,
-	Taken
-};
-
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSetWidgetSwitcherIndex, int32, WidgetSwitcherIndex);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FEnableSelectSlotButton, bool, bEnable);
 
 UCLASS()
 class OURA_API UMVVM_LoadSlot : public UMVVMViewModelBase
@@ -42,6 +36,12 @@ public:
 
 	UPROPERTY()
 	TEnumAsByte<ESaveSlotStatus> SlotStatus;
+
+	UPROPERTY(BlueprintAssignable)
+	FEnableSelectSlotButton EnableSelectSlotButton;
+
+	UPROPERTY()
+	FString MapAssetName;
 
 private:
 

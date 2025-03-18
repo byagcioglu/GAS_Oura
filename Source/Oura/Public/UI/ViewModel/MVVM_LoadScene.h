@@ -6,6 +6,8 @@
 #include "MVVMViewModelBase.h"
 #include "MVVM_LoadScene.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FSlotSelected);
+
 class UMVVM_LoadSlot;
 
 UCLASS()
@@ -31,6 +33,18 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void NewSlotButtonPressed(int32 Slot, const FString& EnteredName);
+
+	UFUNCTION(BlueprintCallable)
+	void SelectSlotButtonPressed(int32 Slot);
+
+	UFUNCTION(BlueprintCallable)
+	void DeleteButtonPressed();
+
+	UPROPERTY(BlueprintAssignable)
+	FSlotSelected SlotSelected;
+
+	UFUNCTION(BlueprintCallable)
+	void PlayButtonPressed();
 	
 private:
 	UPROPERTY()
@@ -47,4 +61,7 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, FieldNotify, Setter, Getter, meta = (AllowPrivateAccess="true"));
 	int32 NumLoadSlots=3;
+
+	UPROPERTY()
+	UMVVM_LoadSlot* SelectedSlot;
 };
