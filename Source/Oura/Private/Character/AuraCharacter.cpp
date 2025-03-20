@@ -10,7 +10,9 @@
 #include "Player/AuraPlayerController.h"
 #include "UI/HUD/AuraHUD.h"
 #include "AbilitySystem/Data/LevelUpInfo.h"
-
+#include "Game/AuraGameModeBase.h"
+#include "Kismet/GameplayStatics.h"
+#include "Game/LoadScreenSaveGame.h"
 
 AAuraCharacter::AAuraCharacter()
 {
@@ -117,6 +119,22 @@ int32 AAuraCharacter::GetPlayerLevel_Implementation()
 {
 	const AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
 	return AuraPlayerState->GetPlayerLevel();
+}
+
+void AAuraCharacter::SaveProgress_Implementation(const FName& CheckpointTag)
+{
+	AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this));
+	if (AuraGameMode)
+	{
+		ULoadScreenSaveGame* SaveData = AuraGameMode->RetrieveInGameSaveData();
+		if (SaveData == nullptr) return;
+
+		SaveData->PlayerStartTag = CheckpointTag;
+
+		if (!HasAuthority()) return;
+		
+		AuraGameMode->SaveInGameProgressData(SaveData);
+	}
 }
 
 

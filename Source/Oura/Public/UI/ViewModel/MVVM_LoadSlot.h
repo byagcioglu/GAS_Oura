@@ -43,6 +43,9 @@ public:
 	UPROPERTY()
 	FString MapAssetName;
 
+	UPROPERTY()
+	FName PlayerStartTag;
+
 private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, FieldNotify, Setter, Getter, meta = (AllowPrivateAccess="true"));
