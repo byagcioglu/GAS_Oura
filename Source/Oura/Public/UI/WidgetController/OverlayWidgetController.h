@@ -50,6 +50,9 @@ public:
 	UPROPERTY(BlueprintAssignable, Category="GAS|Level")
 	FOnLevelChangedSignature OnPlayerLevelChangedDelegate;
 
+	UPROPERTY(BlueprintAssignable, Category="GAS|XP")
+	FOnAttributeChangedSignature OnXPPercentChangedDelegate;
+
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Widget Data")
 	TObjectPtr<UDataTable> MessageWidgetDataTable;
@@ -58,6 +61,8 @@ protected:
 	T* GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& Tag);
 
 	void OnAbilityEquipped(const FGameplayTag& AbilityTag, const FGameplayTag& Status, const FGameplayTag& Slot, const FGameplayTag& PreviousSlot) const;
+
+	void OnXPChanged(int32 NewXP);
 };
 
 template <typename T>
