@@ -29,6 +29,7 @@ public:
 	virtual int32 FindLevelForXP_Implementation(int32 InXP) const override;
 	virtual int32 GetPlayerLevel_Implementation() override;
 	virtual void SaveProgress_Implementation(const FName& CheckpointTag) override;
+	void LoadProgress();
 
 private:
 	UPROPERTY(VisibleAnywhere)

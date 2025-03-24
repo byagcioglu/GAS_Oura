@@ -23,6 +23,7 @@ public:
 	AAuraCharacterBase();
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 	virtual FVector GetCombatSocketLocation_Implementation() override;
 	virtual void Die() override;
 
