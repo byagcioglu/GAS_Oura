@@ -13,6 +13,7 @@ class UAuraInputConfig;
 class USplineComponent;
 struct FInputActionValue;
 class UAuraAbilitySystemComponent;
+class UDamageTextComponent;
 
 enum class ETargetingStatus : uint8
 {
@@ -29,6 +30,9 @@ class OURA_API AAuraPlayerController : public APlayerController
 public:
 	AAuraPlayerController();
 	virtual void PlayerTick(float DeltaTime) override;
+
+	UFUNCTION(Client, Reliable)
+	void ShowDamageNumber(float DamageAmount, ACharacter* TargetCharacter, bool bBlockedHit, bool bCriticalHit);
 
 	
 protected:
@@ -77,4 +81,7 @@ private:
 	TObjectPtr<UAuraAbilitySystemComponent> AuraAbilitySystemComponent;
 
 	UAuraAbilitySystemComponent* GetASC();
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UDamageTextComponent> DamageTextComponentClass;
 };
