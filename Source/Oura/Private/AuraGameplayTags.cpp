@@ -155,6 +155,10 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 	 * Debuffs
 	 */
 	
+	GameplayTags.Debuff_Chance = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Debuff.Chance"),
+		FString("Debuff Chance")
+		);
 	GameplayTags.Debuff_Damage = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Debuff.Damage"),
 		FString("Debuff Damage")
@@ -283,5 +287,24 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FName("Montage.Attack.1"),
 		FString("Attack 1")
 		);
+
+	/*
+	 * Damage Types
+	 */
+
+	GameplayTags.Damage_Fire = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Damage.Fire"),
+		FString("Fire Damage Type")
+		);
+	GameplayTags.Damage_Lightning = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Damage.Lightning"),
+		FString("Lightning Damage Type")
+		);
+
+	/*
+	 * Map of Damage Types to Resistances
+	 */
+	GameplayTags.DamageTypesToResistances.Add(GameplayTags.Damage_Fire, GameplayTags.Attributes_Resistance_Fire);
+	GameplayTags.DamageTypesToResistances.Add(GameplayTags.Damage_Lightning, GameplayTags.Attributes_Resistance_Lightning);
 
 }

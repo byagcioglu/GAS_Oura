@@ -43,6 +43,7 @@ public:
 	FGameplayTag Attributes_Resistance_Arcane;
 	FGameplayTag Attributes_Resistance_Physical;
 
+	FGameplayTag Debuff_Chance;
 	FGameplayTag Debuff_Damage;
 	FGameplayTag Debuff_Duration;
 	FGameplayTag Debuff_Frequency;
@@ -70,6 +71,11 @@ public:
 	FGameplayTag Abilities_Passive_ManaSiphon;
 
 	FGameplayTag Montage_Attack_1;
+
+	FGameplayTag Damage_Fire;
+	FGameplayTag Damage_Lightning;
+
+	TMap<FGameplayTag, FGameplayTag> DamageTypesToResistances;
 
 private:
     static FAuraGameplayTags GameplayTags;

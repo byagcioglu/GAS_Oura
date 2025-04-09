@@ -24,6 +24,9 @@ struct FDamageEffectParams
 	TObjectPtr<UAbilitySystemComponent> TargetAbilitySystemComponent;
 
 	UPROPERTY(BlueprintReadWrite)
+	float DebuffChance = 0.f;
+
+	UPROPERTY(BlueprintReadWrite)
 	float DebuffDamage = 0.f;
 
 	UPROPERTY(BlueprintReadWrite)

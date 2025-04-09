@@ -193,10 +193,21 @@ void UAuraAttributeSet::Debuff(const FEffectProperties& Props)
 	ModifierInfo.ModifierOp = EGameplayModOp::Additive;
 	ModifierInfo.Attribute = UAuraAttributeSet::GetIncomingDamageAttribute();
 	
-	if (FGameplayEffectSpec* MutableSpec = new FGameplayEffectSpec(Effect, EffectContext, 1.f))
+	if (TSharedPtr<FGameplayEffectSpec> MutableSpec = MakeShared<FGameplayEffectSpec>(Effect, EffectContext, 1.f))
 	{
-		FAuraGameplayEffectContext* AuraContext = static_cast<FAuraGameplayEffectContext*>(MutableSpec->GetContext().Get());
-		Props.TargetASC->ApplyGameplayEffectSpecToSelf(*MutableSpec);
+		if (UWorld* World = GetWorld())
+		{
+			TWeakObjectPtr<UAbilitySystemComponent> TargetASC = Props.TargetASC;
+
+			FTimerHandle TimerHandle;
+			World->GetTimerManager().SetTimer(TimerHandle, [MutableSpec, TargetASC]()
+											  {
+												  if (MutableSpec.IsValid() && MutableSpec.Get()->GetContext().IsValid() && TargetASC.IsValid())
+												  {
+													  TargetASC->ApplyGameplayEffectSpecToSelf(*MutableSpec.Get());
+												  }
+											  }, 1.0f, false);
+		}
 	}
 }
 
