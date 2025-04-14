@@ -43,6 +43,11 @@ public:
 	FGameplayTag Attributes_Resistance_Arcane;
 	FGameplayTag Attributes_Resistance_Physical;
 
+	FGameplayTag Debuff_Burn;
+	FGameplayTag Debuff_Stun;
+	FGameplayTag Debuff_Arcane;
+	FGameplayTag Debuff_Physical;
+
 	FGameplayTag Debuff_Chance;
 	FGameplayTag Debuff_Damage;
 	FGameplayTag Debuff_Duration;
@@ -74,8 +79,11 @@ public:
 
 	FGameplayTag Damage_Fire;
 	FGameplayTag Damage_Lightning;
+	FGameplayTag Damage_Arcane;
+	FGameplayTag Damage_Physical;
 
 	TMap<FGameplayTag, FGameplayTag> DamageTypesToResistances;
+	TMap<FGameplayTag, FGameplayTag> DamageTypesToDebuffs;
 
 private:
     static FAuraGameplayTags GameplayTags;

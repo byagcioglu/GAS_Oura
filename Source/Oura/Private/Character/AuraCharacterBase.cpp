@@ -6,10 +6,22 @@
 #include "Components/CapsuleComponent.h"
 #include "AbilitySystem/Passive/PassiveNiagaraComponent.h"
 #include "Net/UnrealNetwork.h"
+#include "AbilitySystem/Debuff/DebuffNiagaraComponent.h"
+#include "AuraGameplayTags.h"
+
 
 AAuraCharacterBase::AAuraCharacterBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
+	const FAuraGameplayTags& GameplayTags = FAuraGameplayTags::Get();
+
+	BurnDebuffComponent = CreateDefaultSubobject<UDebuffNiagaraComponent>("BurnDebuffComponent");
+	BurnDebuffComponent->SetupAttachment(GetRootComponent());
+	BurnDebuffComponent->DebuffTag = GameplayTags.Debuff_Burn;
+
+	StunDebuffComponent = CreateDefaultSubobject<UDebuffNiagaraComponent>("StunDebuffComponent");
+	StunDebuffComponent->SetupAttachment(GetRootComponent());
+	StunDebuffComponent->DebuffTag = GameplayTags.Debuff_Stun;
 
 	Weapon = CreateDefaultSubobject<USkeletalMeshComponent>("Weapon");
 	Weapon->SetupAttachment(GetMesh(), FName("WeaponHandSocket"));
@@ -155,5 +167,10 @@ void AAuraCharacterBase::SetIsBeingShocked_Implementation(bool bInShock)
 bool AAuraCharacterBase::IsBeingShocked_Implementation() const
 {
 	return bIsBeingShocked;
+}
+
+FOnASCRegistered& AAuraCharacterBase::GetOnASCRegisteredDelegate()
+{
+	return OnAscRegistered;
 }
 
