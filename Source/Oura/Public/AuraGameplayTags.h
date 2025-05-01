@@ -56,6 +56,7 @@ public:
 	FGameplayTag Abilities_None;
 
 	FGameplayTag Abilities_Attack;
+	FGameplayTag Abilities_Summon;
 
 	FGameplayTag Effects_HitReact;
 

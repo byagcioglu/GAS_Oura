@@ -9,6 +9,14 @@
 class UGameplayEffect;
 class UGameplayAbility;
 
+UENUM(BlueprintType)
+enum class ECharacterClass : uint8
+{
+	Elementalist,
+	Warrior,
+	Ranger
+};
+
 UCLASS()
 class OURA_API UCharacterClassInfo : public UDataAsset
 {
