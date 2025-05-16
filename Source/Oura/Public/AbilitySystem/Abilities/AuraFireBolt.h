@@ -16,6 +16,6 @@ class OURA_API UAuraFireBolt : public UAuraProjectileSpell
 
 public:
 	UFUNCTION(BlueprintCallable)
-	void SpawnProjectiles(const FVector& ProjectileTargetLocation);
+	void SpawnProjectiles(const FVector& ProjectileTargetLocation, const FGameplayTag& SocketTag);
 	
 };
