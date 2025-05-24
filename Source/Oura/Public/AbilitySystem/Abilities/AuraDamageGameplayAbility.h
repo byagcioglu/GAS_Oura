@@ -45,5 +45,8 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
 	float KnockbackForceMagnitude = 1000.f;
+
+	UFUNCTION(BlueprintPure)
+	FTaggedMontage GetRandomTaggedMontageFromArray(const TArray<FTaggedMontage>& TaggedMontages) const;
 	
 };

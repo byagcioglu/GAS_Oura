@@ -27,3 +27,14 @@ FDamageEffectParams UAuraDamageGameplayAbility::MakeDamageEffectParamsFromClassD
 	
 	return Params;
 }
+
+FTaggedMontage UAuraDamageGameplayAbility::GetRandomTaggedMontageFromArray(const TArray<FTaggedMontage>& TaggedMontages) const
+{
+	if (TaggedMontages.Num() > 0)
+	{
+		const int32 Selection = FMath::RandRange(0, TaggedMontages.Num() - 1);
+		return TaggedMontages[Selection];
+	}
+
+	return FTaggedMontage();
+}
