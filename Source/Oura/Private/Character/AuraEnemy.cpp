@@ -88,6 +88,8 @@ void AAuraEnemy::UnHighlightActor_Implementation()
 void AAuraEnemy::InitAbilityActorInfo()
 {
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
+	AbilitySystemComponent->RegisterGameplayTagEvent(FAuraGameplayTags::Get().Debuff_Stun,
+									EGameplayTagEventType::NewOrRemoved).AddUObject(this, &AAuraEnemy::StunTagChanged);
 
 	if (HasAuthority())
 	{
@@ -131,5 +133,15 @@ AActor* AAuraEnemy::GetCombatTarget_Implementation() const
 int32 AAuraEnemy::GetPlayerLevel_Implementation()
 {
 	return Level;
+}
+
+void AAuraEnemy::StunTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
+{
+	Super::StunTagChanged(CallbackTag, NewCount);
+	
+	if (AuraAIController && AuraAIController->GetBlackboardComponent())
+	{
+		AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("Stunned"), bIsStunned);
+	}
 }
 

@@ -8,6 +8,7 @@
 #include "Net/UnrealNetwork.h"
 #include "AbilitySystem/Debuff/DebuffNiagaraComponent.h"
 #include "AuraGameplayTags.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 
 AAuraCharacterBase::AAuraCharacterBase()
@@ -214,6 +215,12 @@ TArray<FTaggedMontage> AAuraCharacterBase::GetAttackMontages_Implementation()
 UAnimMontage* AAuraCharacterBase::GetHitReactMontage_Implementation()
 {
 	return HitReactMontage;
+}
+
+void AAuraCharacterBase::StunTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
+{
+	bIsStunned = NewCount > 0;
+	GetCharacterMovement()->MaxWalkSpeed = bIsStunned ? 0.f : 600.f;
 }
 
 

@@ -65,5 +65,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
 	int32 Level = 1;
+
+	virtual void StunTagChanged(const FGameplayTag CallbackTag, int32 NewCount) override;
 	
 };

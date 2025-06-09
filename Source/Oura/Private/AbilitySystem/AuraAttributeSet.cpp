@@ -184,12 +184,27 @@ void UAuraAttributeSet::Debuff(const FEffectProperties& Props)
 	Effect->DurationPolicy = EGameplayEffectDurationType::HasDuration;
 	Effect->Period = DebuffFrequency;
 	Effect->DurationMagnitude = FScalableFloat(DebuffDuration);
+	Effect->bExecutePeriodicEffectOnApplication=false;
 
 	const FGameplayTag DebuffTag = GameplayTags.DamageTypesToDebuffs[DamageType];
 	FInheritedTagContainer TagContainer = FInheritedTagContainer();
 	UTargetTagsGameplayEffectComponent& Component = Effect->FindOrAddComponent<UTargetTagsGameplayEffectComponent>();
 	TagContainer.Added.AddTag(DebuffTag);
 	TagContainer.CombinedTags.AddTag(DebuffTag);
+
+	if (DebuffTag.MatchesTagExact(GameplayTags.Debuff_Stun))
+	{
+		TagContainer.Added.AddTag(GameplayTags.Player_Block_CursorTrace);
+		TagContainer.Added.AddTag(GameplayTags.Player_Block_InputHeld);
+		TagContainer.Added.AddTag(GameplayTags.Player_Block_InputPressed);
+		TagContainer.Added.AddTag(GameplayTags.Player_Block_InputReleased);
+
+		TagContainer.CombinedTags.AddTag(GameplayTags.Player_Block_CursorTrace);
+		TagContainer.CombinedTags.AddTag(GameplayTags.Player_Block_InputHeld);
+		TagContainer.CombinedTags.AddTag(GameplayTags.Player_Block_InputPressed);
+		TagContainer.CombinedTags.AddTag(GameplayTags.Player_Block_InputReleased);
+	}
+
 	Component.SetAndApplyTargetTagChanges(TagContainer);
 
 	Effect->StackingType = EGameplayEffectStackingType::AggregateBySource;
@@ -208,24 +223,9 @@ void UAuraAttributeSet::Debuff(const FEffectProperties& Props)
 		FAuraGameplayEffectContext* AuraContext = static_cast<FAuraGameplayEffectContext*>(MutableSpec->GetContext().Get());
 		TSharedPtr<FGameplayTag> DebuffDamageType = MakeShareable(new FGameplayTag(DamageType));
 		AuraContext->SetDamageType(DebuffDamageType);
+		Props.TargetASC->ApplyGameplayEffectSpecToSelf(*MutableSpec);
 	}
 	
-	if (TSharedPtr<FGameplayEffectSpec> MutableSpec = MakeShared<FGameplayEffectSpec>(Effect, EffectContext, 1.f))
-	{
-		if (UWorld* World = GetWorld())
-		{
-			TWeakObjectPtr<UAbilitySystemComponent> TargetASC = Props.TargetASC;
-
-			FTimerHandle TimerHandle;
-			World->GetTimerManager().SetTimer(TimerHandle, [MutableSpec, TargetASC]()
-											  {
-												  if (MutableSpec.IsValid() && MutableSpec.Get()->GetContext().IsValid() && TargetASC.IsValid())
-												  {
-													  TargetASC->ApplyGameplayEffectSpecToSelf(*MutableSpec.Get());
-												  }
-											  }, 1.0f, false);
-		}
-	}
 }
 
 void UAuraAttributeSet::HandleIncomingXP(const FEffectProperties& Props)

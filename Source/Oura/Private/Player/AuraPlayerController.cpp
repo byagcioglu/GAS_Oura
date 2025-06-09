@@ -14,6 +14,7 @@
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "Interaction/EnemyInterface.h"
 #include "UI/Widget/DamageTextComponent.h"
+#include "AuraGameplayTags.h"
 
 
 
@@ -48,6 +49,17 @@ void AAuraPlayerController::UnHighlightActor(AActor* InActor)
 
 void AAuraPlayerController::CursorTrace()
 {
+	if (GetASC() && GetASC()->HasMatchingGameplayTag(FAuraGameplayTags::Get().Player_Block_CursorTrace))
+	{
+		UnHighlightActor(LastActor);
+		UnHighlightActor(ThisActor);
+		if (IsValid(ThisActor) && ThisActor->Implements<UHighlightInterface>())
+
+		LastActor = nullptr;
+		ThisActor = nullptr;
+		return;
+	}
+
 	const ECollisionChannel TraceChannel = ECC_Visibility;
 	GetHitResultUnderCursor(TraceChannel, false, CursorHit);
 	if (!CursorHit.bBlockingHit) return;
@@ -120,6 +132,11 @@ void AAuraPlayerController::SetupInputComponent()
 
 void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 {
+	if (GetASC() && GetASC()->HasMatchingGameplayTag(FAuraGameplayTags::Get().Player_Block_InputPressed))
+	{
+		return;
+	}
+
 	const FVector2D InputAxisVector = InputActionValue.Get<FVector2D>();
 	const FRotator Rotation = GetControlRotation();
 	const FRotator YawRotation(0.f, Rotation.Yaw, 0.f);
@@ -136,6 +153,11 @@ void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 
 void AAuraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 {
+	if (GetASC() && GetASC()->HasMatchingGameplayTag(FAuraGameplayTags::Get().Player_Block_InputPressed))
+	{
+		return;
+	}
+
 	if (IsValid(ThisActor))
 	{
 		TargetingStatus = ThisActor->Implements<UEnemyInterface>() ? ETargetingStatus::TargetingEnemy : ETargetingStatus::TargetingNonEnemy;
@@ -152,6 +174,11 @@ void AAuraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 
 void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
+	if (GetASC() && GetASC()->HasMatchingGameplayTag(FAuraGameplayTags::Get().Player_Block_InputReleased))
+	{
+		return;
+	}
+
 	if (GetASC()) GetASC()->AbilityInputTagReleased(InputTag);
 
 	if (TargetingStatus != ETargetingStatus::TargetingEnemy && !bShiftKeyDown)
@@ -176,6 +203,11 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 
 void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 {
+	if (GetASC() && GetASC()->HasMatchingGameplayTag(FAuraGameplayTags::Get().Player_Block_InputHeld))
+	{
+		return;
+	}
+
 	if (TargetingStatus == ETargetingStatus::TargetingEnemy || bShiftKeyDown)
 	{
 		if (GetASC()) GetASC()->AbilityInputTagHeld(InputTag);
